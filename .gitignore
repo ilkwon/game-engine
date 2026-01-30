@@ -1,0 +1,10 @@
+
+build/
+
+# externals/glfw/generated 전체 무시
+externals/glfw/generated/**
+externals/glew-2.1.0/generated/**
+
+# 단, run_cmake.bat만 예외로 추적
+!externals/glfw/generated/run_cmake.bat
+!externals/glew-2.1.0/generated/run_cmake.bat
