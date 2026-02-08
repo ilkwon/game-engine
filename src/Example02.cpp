@@ -156,7 +156,6 @@ void Example02::CreateVertexBuffer()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 	}
-
 }
 
 //-----------------------------------------------------------------------------
