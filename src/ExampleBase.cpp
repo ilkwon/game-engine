@@ -26,7 +26,7 @@ GLFWwindow* ExampleBase::CreateWindow(int width, int height, const std::string t
   mWindowParam.width = width;
   mWindowParam.height = height;
 
-  glfwSetErrorCallback(GlfwErrorCallback);
+	glfwSetErrorCallback(GlfwErrorCallback);	// 에러 콜백 등록
     
   if (!glfwInit()) {
     std::cerr << "glfwInit failed" << std::endl;
