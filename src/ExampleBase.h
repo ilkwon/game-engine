@@ -6,6 +6,7 @@
 
 #include "common/WindowParam.h"
 
+
 struct GLFWwindow;
 
 class ExampleBase {

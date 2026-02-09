@@ -8,6 +8,11 @@
 #include "GLFW/glfw3.h"
 
 //-----------------------------------------------------------------------------
+static void GlfwErrorCallback(int error, const char* description) {
+  std::fprintf(stderr, "GLFW Error (%d): %s\n", error, description);
+}
+
+//-----------------------------------------------------------------------------
 ExampleBase::ExampleBase() {
 	mTitle = "Example01_Window";
 }
@@ -21,6 +26,8 @@ GLFWwindow* ExampleBase::CreateWindow(int width, int height, const std::string t
   mWindowParam.width = width;
   mWindowParam.height = height;
 
+  glfwSetErrorCallback(GlfwErrorCallback);
+    
   if (!glfwInit()) {
     std::cerr << "glfwInit failed" << std::endl;
     return nullptr;
