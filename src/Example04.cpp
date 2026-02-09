@@ -30,10 +30,10 @@ void Example04::RunWidthParam(UvType uvType, int wrapType, int filterType)
 }
 
 //---------------------------------------------------------------------------
-// ¼ÎÀÌ´õ °ü·Ã.
+// ì…°ì´ë” ê´€ë ¨.
 void Example04::CreateDefaultShader() 
 {
-	// ¼ÎÀÌ´õ ¼Ò½º ÄÚµå
+	// ì…°ì´ë” ì†ŒìŠ¤ ì½”ë“œ
 	const char* vertexShaderSource = R"(
 		#version 330 core
 		layout (location = 0) in vec3 aPos;
@@ -49,7 +49,7 @@ void Example04::CreateDefaultShader()
 		}
 	)";
 
-	// ÇÁ·¡±×¸ÕÆ® ¼ÎÀÌ´õ ¼Ò½º ÄÚµå
+	// í”„ë˜ê·¸ë¨¼íŠ¸ ì…°ì´ë” ì†ŒìŠ¤ ì½”ë“œ
 	const char* fragmentShaderSource = R"(
 		#version 330 core
 		out vec4 FragColor;
@@ -68,19 +68,19 @@ void Example04::CreateDefaultShader()
 
 	unsigned int vertex{};
 	unsigned int fragment{};
-	// vertex shader »ı¼º ¹× ÄÄÆÄÀÏ
+	// vertex shader ìƒì„± ë° ì»´íŒŒì¼
 	vertex = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertex, 1, &VERTEX_SHADER_CODE, NULL);
 	glCompileShader(vertex);
-	CheckShaderCompileErrors(vertex, "VERTEX");	// ÄÄÆÄÀÏ ¿À·ù Ã¼Å©
+	CheckShaderCompileErrors(vertex, "VERTEX");	// ì»´íŒŒì¼ ì˜¤ë¥˜ ì²´í¬
 	
-	// fragment shader »ı¼º ¹× ÄÄÆÄÀÏ
+	// fragment shader ìƒì„± ë° ì»´íŒŒì¼
 	fragment = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment, 1, &FRAGMENT_SHADER_CODE, NULL);
 	glCompileShader(fragment);
-	CheckShaderCompileErrors(fragment, "FRAGMENT"); // ÄÄÆÄÀÏ ¿À·ù Ã¼Å©
+	CheckShaderCompileErrors(fragment, "FRAGMENT"); // ì»´íŒŒì¼ ì˜¤ë¥˜ ì²´í¬
 
-	// shader program »ı¼º ¹× ¸µÅ©
+	// shader program ìƒì„± ë° ë§í¬
 	mDefaultShaderID = glCreateProgram();				
 	glAttachShader(mDefaultShaderID, vertex);		
 	glAttachShader(mDefaultShaderID, fragment); 
@@ -88,7 +88,7 @@ void Example04::CreateDefaultShader()
 	glLinkProgram(mDefaultShaderID);	
 	CheckShaderCompileErrors(mDefaultShaderID, "PROGRAM"); 
 
-	// ¼ÎÀÌ´õ °´Ã¼´Â ´õ ÀÌ»ó ÇÊ¿ä ¾øÀ¸¹Ç·Î »èÁ¦
+	// ì…°ì´ë” ê°ì²´ëŠ” ë” ì´ìƒ í•„ìš” ì—†ìœ¼ë¯€ë¡œ ì‚­ì œ
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 }
@@ -123,7 +123,7 @@ void Example04::DeleteDefaultShader()
 }
 
 //---------------------------------------------------------------------------
-// »ï°¢Çü ·»´õ¸µ °ü·Ã.
+// ì‚¼ê°í˜• ë Œë”ë§ ê´€ë ¨.
 void Example04::CreateRectangle() 
 {
 	glm::vec2 uvLeftTop{ 0};
@@ -133,14 +133,14 @@ void Example04::CreateRectangle()
 
 	switch (mUvType) {
 		case UvType::Fit:
-		// ±âº» UV ÁÂÇ¥ »ç¿ë
+		// ê¸°ë³¸ UV ì¢Œí‘œ ì‚¬ìš©
 			uvLeftTop = glm::vec2{ 0.0f, 1.0f };
 			uvRightTop = glm::vec2{ 1.0f, 1.0f };
 			uvRightBottom = glm::vec2{ 1.0f, 0.0f };
 			uvLeftBottom = glm::vec2{ 0.0f, 0.0f };
 			break;
 		case UvType::Smaller:
-			// UV ÁÂÇ¥¸¦ 0.5¹è Ãà¼Ò
+			// UV ì¢Œí‘œë¥¼ 0.5ë°° ì¶•ì†Œ
 			uvLeftTop = glm::vec2{ 0.25f, 0.75f };
 			uvRightTop = glm::vec2{ 0.75f, 0.75f };
 			uvRightBottom = glm::vec2{ 0.75f, 0.25f };
@@ -148,7 +148,7 @@ void Example04::CreateRectangle()
 
 			break;
 		case UvType::Bigger:
-			// UV ÁÂÇ¥¸¦ 2¹è È®´ë
+			// UV ì¢Œí‘œë¥¼ 2ë°° í™•ëŒ€
 			uvLeftTop = glm::vec2{ -0.5f, 1.5f };
 			uvRightTop = glm::vec2{ 1.5f, 1.5f };
 			uvRightBottom = glm::vec2{ 1.5f, -0.5f };
@@ -174,33 +174,33 @@ void Example04::CreateRectangle()
 //---------------------------------------------------------------------------
 void Example04::CreateVertexBuffer() 
 {
-	glGenVertexArrays(1, &mVertexArrayObjectId); // Á¤Á¡ ¹è¿­ °´Ã¼ »ı¼º
-	glGenBuffers(1, &mVertexBufferObjectId);	// Á¤Á¡ ¹öÆÛ °´Ã¼ »ı¼º
-	glGenBuffers(1, &mElementBufferObjectId); // ¿ä¼Ò ¹öÆÛ °´Ã¼ »ı¼º
-	glBindVertexArray(mVertexArrayObjectId); // Á¤Á¡ ¹è¿­ °´Ã¼ ¹ÙÀÎµù
-	glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObjectId); // Á¤Á¡ ¹öÆÛ °´Ã¼ ¹ÙÀÎµù
-	glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(VertexUV), mVertices.data(), GL_STATIC_DRAW); // Á¤Á¡ µ¥ÀÌÅÍ ¾÷·Îµå
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mElementBufferObjectId); // ¿ä¼Ò ¹öÆÛ °´Ã¼ ¹ÙÀÎµù
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(unsigned int), mIndices.data(), GL_STATIC_DRAW); // ¿ä¼Ò µ¥ÀÌÅÍ ¾÷·Îµå
-	// Á¤Á¡ ¼Ó¼º ¼³Á¤
-	// À§Ä¡ ¼Ó¼º
+	glGenVertexArrays(1, &mVertexArrayObjectId); // ì •ì  ë°°ì—´ ê°ì²´ ìƒì„±
+	glGenBuffers(1, &mVertexBufferObjectId);	// ì •ì  ë²„í¼ ê°ì²´ ìƒì„±
+	glGenBuffers(1, &mElementBufferObjectId); // ìš”ì†Œ ë²„í¼ ê°ì²´ ìƒì„±
+	glBindVertexArray(mVertexArrayObjectId); // ì •ì  ë°°ì—´ ê°ì²´ ë°”ì¸ë”©
+	glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObjectId); // ì •ì  ë²„í¼ ê°ì²´ ë°”ì¸ë”©
+	glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(VertexUV), mVertices.data(), GL_STATIC_DRAW); // ì •ì  ë°ì´í„° ì—…ë¡œë“œ
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mElementBufferObjectId); // ìš”ì†Œ ë²„í¼ ê°ì²´ ë°”ì¸ë”©
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(unsigned int), mIndices.data(), GL_STATIC_DRAW); // ìš”ì†Œ ë°ì´í„° ì—…ë¡œë“œ
+	// ì •ì  ì†ì„± ì„¤ì •
+	// ìœ„ì¹˜ ì†ì„±
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexUV), (void*)offsetof(VertexUV, mPosition));
 	glEnableVertexAttribArray(0);
-	// »ö»ó ¼Ó¼º
+	// ìƒ‰ìƒ ì†ì„±
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexUV), (void*)offsetof(VertexUV, mColor));
 	glEnableVertexAttribArray(1);
-	// ÅØ½ºÃ³ ÁÂÇ¥ ¼Ó¼º
+	// í…ìŠ¤ì²˜ ì¢Œí‘œ ì†ì„±
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexUV), (void*)offsetof(VertexUV, mUv));
 	glEnableVertexAttribArray(2);
-	glBindBuffer(GL_ARRAY_BUFFER, 0); // Á¤Á¡ ¹öÆÛ °´Ã¼ ¹ÙÀÎµù ÇØÁ¦
-	glBindVertexArray(0); // Á¤Á¡ ¹è¿­ °´Ã¼ ¹ÙÀÎµù ÇØÁ¦
+	glBindBuffer(GL_ARRAY_BUFFER, 0); // ì •ì  ë²„í¼ ê°ì²´ ë°”ì¸ë”© í•´ì œ
+	glBindVertexArray(0); // ì •ì  ë°°ì—´ ê°ì²´ ë°”ì¸ë”© í•´ì œ
 }
 
 //---------------------------------------------------------------------------
 void Example04::DeleteVertexBuffer() {
-	glDeleteVertexArrays(1, &mVertexArrayObjectId); // Á¤Á¡ ¹è¿­ °´Ã¼ »èÁ¦
-	glDeleteBuffers(1, &mVertexBufferObjectId);	// Á¤Á¡ ¹öÆÛ °´Ã¼ »èÁ¦
-	glDeleteBuffers(1, &mElementBufferObjectId); // ¿ä¼Ò ¹öÆÛ °´Ã¼ »èÁ¦
+	glDeleteVertexArrays(1, &mVertexArrayObjectId); // ì •ì  ë°°ì—´ ê°ì²´ ì‚­ì œ
+	glDeleteBuffers(1, &mVertexBufferObjectId);	// ì •ì  ë²„í¼ ê°ì²´ ì‚­ì œ
+	glDeleteBuffers(1, &mElementBufferObjectId); // ìš”ì†Œ ë²„í¼ ê°ì²´ ì‚­ì œ
 }
 
 //---------------------------------------------------------------------------
@@ -212,29 +212,29 @@ unsigned int Example04::LoadTexture(const std::string& path)
 	// texture wrap
 	if (mWrapType == GL_CLAMP_TO_BORDER) {
 		const float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
-		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);	// Å×µÎ¸® »ö»ó ÁöÁ¤
+		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);	// í…Œë‘ë¦¬ ìƒ‰ìƒ ì§€ì •
 	}
 
 	// texture parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mWrapType);		// S ¹æÇâ ·¡ÇÎ ¹æ½Ä ¼³Á¤
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mWrapType); 	// T ¹æÇâ ·¡ÇÎ ¹æ½Ä ¼³Á¤
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, mWrapType);		// S ë°©í–¥ ë˜í•‘ ë°©ì‹ ì„¤ì •
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, mWrapType); 	// T ë°©í–¥ ë˜í•‘ ë°©ì‹ ì„¤ì •
 	// texture filtering
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mFilterType); // Ãà¼Ò ÇÊÅÍ¸µ ¹æ½Ä ¼³Á¤
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mFilterType); // È®´ë ÇÊÅÍ¸µ ¹æ½Ä ¼³Á¤
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mFilterType); // ì¶•ì†Œ í•„í„°ë§ ë°©ì‹ ì„¤ì •
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mFilterType); // í™•ëŒ€ í•„í„°ë§ ë°©ì‹ ì„¤ì •
 
 	int width, height, nrChannels;
-	stbi_set_flip_vertically_on_load(true); // ÀÌ¹ÌÁö ¼öÁ÷ µÚÁı±â ¼³Á¤
+	stbi_set_flip_vertically_on_load(true); // ì´ë¯¸ì§€ ìˆ˜ì§ ë’¤ì§‘ê¸° ì„¤ì •
 	unsigned char* imgdata = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 	if (imgdata) {
 		switch (nrChannels) {
 		case 1:
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, imgdata);	// Èæ¹é ÀÌ¹ÌÁö
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, imgdata);	// í‘ë°± ì´ë¯¸ì§€
 			break;
 		case 3:
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imgdata);	// ÀÏ¹İÀûÀÎ RGB ÀÌ¹ÌÁö
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imgdata);	// ì¼ë°˜ì ì¸ RGB ì´ë¯¸ì§€
 			break;
 		case 4: 
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imgdata); // ¾ËÆÄ Ã¤³ÎÀÌ ÀÖ´Â RGBA ÀÌ¹ÌÁö
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imgdata); // ì•ŒíŒŒ ì±„ë„ì´ ìˆëŠ” RGBA ì´ë¯¸ì§€
 			break;
 		default:
 			std::cout << "Unsupported number of channels: " << nrChannels << std::endl;
@@ -262,23 +262,23 @@ void Example04::Initialize()
 //---------------------------------------------------------------------------
 void Example04::Render() 
 {
-	// ·»´õ¸µ¿¡ Àû¿ëÇÒ ¼ÎÀÌ´õ ÇÁ·Î±×·¥ »ç¿ë
+	// ë Œë”ë§ì— ì ìš©í•  ì…°ì´ë” í”„ë¡œê·¸ë¨ ì‚¬ìš©
 	glUseProgram(mDefaultShaderID);
-	// ÅØ½ºÃ³ À¯´Ö ¼³Á¤ ¹× ¹ÙÀÎµù
+	// í…ìŠ¤ì²˜ ìœ ë‹› ì„¤ì • ë° ë°”ì¸ë”©
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mTextureId0);
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, mTextureId1);
-	// ¼ÎÀÌ´õÀÇ »ùÇÃ·¯ À¯´ÏÆû¿¡ ÅØ½ºÃ³ À¯´Ö ÀÎµ¦½º ¼³Á¤
+	// ì…°ì´ë”ì˜ ìƒ˜í”ŒëŸ¬ ìœ ë‹ˆí¼ì— í…ìŠ¤ì²˜ ìœ ë‹› ì¸ë±ìŠ¤ ì„¤ì •
 	glUniform1i(glGetUniformLocation(mDefaultShaderID, "texture1"), 0);
 	glUniform1i(glGetUniformLocation(mDefaultShaderID, "texture2"), 1);
 	
-	// Á¤Á¡ ¹è¿­ °´Ã¼ ¹ÙÀÎµù
+	// ì •ì  ë°°ì—´ ê°ì²´ ë°”ì¸ë”©
 	glBindVertexArray(mVertexArrayObjectId);
-	// »ï°¢Çü ·»´õ¸µ
+	// ì‚¼ê°í˜• ë Œë”ë§
 	glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mIndices.size()), GL_UNSIGNED_INT, 0);
 	
-	glBindVertexArray(0); // Á¤Á¡ ¹è¿­ °´Ã¼ ¹ÙÀÎµù ÇØÁ¦
+	glBindVertexArray(0); // ì •ì  ë°°ì—´ ê°ì²´ ë°”ì¸ë”© í•´ì œ
 }
 
 //---------------------------------------------------------------------------

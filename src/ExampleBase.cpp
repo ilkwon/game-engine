@@ -16,62 +16,77 @@ ExampleBase::~ExampleBase() {
 
 }
 //-----------------------------------------------------------------------------
-// GLFW À©µµ¿ì »ı¼º
+// GLFW ìœˆë„ìš° ìƒì„±	
 GLFWwindow* ExampleBase::CreateWindow(int width, int height, const std::string title) {
-	mWindowParam.width = width;
-	mWindowParam.height = height;
+  mWindowParam.width = width;
+  mWindowParam.height = height;
 
-	// GLFW À©µµ¿ì »ı¼º
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  if (!glfwInit()) {
+    std::cerr << "glfwInit failed" << std::endl;
+    return nullptr;
+  }
 
-	GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
-	if (window == nullptr) {
-		std::cerr << "Failed to create GLFW window" << std::endl;
-		glfwTerminate();
-		return false;
-	}
+#ifdef __APPLE__
+  // macOSëŠ” ë³´í†µ OpenGL 4.1ê¹Œì§€ë§Œ ì§€ì› + forward compatible í•„ìš”
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#else
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#endif
 
-	// »ı¼ºÇÑ À©µµ¿ì¸¦ ÀÛ¾÷´ë»ó	ÄÁÅØ½ºÆ®·Î ¼³Á¤
-	glfwMakeContextCurrent(window);
-	
-	// ÀÌº¥Æ® Äİ¹é ÇÔ¼öµéÀ» µî·Ï
-	glfwSetFramebufferSizeCallback(window, OnGlfwSetFramebufferSizeCallback);
-	glfwSetCursorPosCallback(window, OnGlfwSetCursorPosCallback);
-	glfwSetMouseButtonCallback(window, OnGlfwSetMouseButtonCallback);
-	glfwSetScrollCallback(window, OnGlfwSetScrollCallback);
-	glfwSetKeyCallback(window, OnGlfwSetKeyCallback);
+  GLFWwindow* window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+  if (window == nullptr) {
+    std::cerr << "Failed to create GLFW window" << std::endl;
+    glfwTerminate();
+    return nullptr;
+  }
 
-	glfwSetWindowUserPointer(window, this);
+  glfwMakeContextCurrent(window);
 
-	// OpenGL µå¶óÀÌ¹ö ÃÊ±âÈ­
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		std::cerr << "Failed to initialize GLAD" << std::endl;
-		return false;
-	}
+  // (ì„ íƒ) vsync
+  glfwSwapInterval(1);
 
-	return window;
+  // ì´ë²¤íŠ¸ ì½œë°± ë“±ë¡
+  glfwSetFramebufferSizeCallback(window, OnGlfwSetFramebufferSizeCallback);
+  glfwSetCursorPosCallback(window, OnGlfwSetCursorPosCallback);
+  glfwSetMouseButtonCallback(window, OnGlfwSetMouseButtonCallback);
+  glfwSetScrollCallback(window, OnGlfwSetScrollCallback);
+  glfwSetKeyCallback(window, OnGlfwSetKeyCallback);
+
+  glfwSetWindowUserPointer(window, this);
+
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    std::cerr << "Failed to initialize GLAD" << std::endl;
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    return nullptr;
+  }
+
+  return window;
 }
+
 //-----------------------------------------------------------------------------
 void ExampleBase::Run() {
-	// À©µµ¿ì¸¦ »ı¼ºÇÑ´Ù.
+	// ìœˆë„ìš°ë¥¼ ìƒì„±í•œë‹¤.
 	mGlfwWindow = CreateWindow(800, 800, mTitle);
 	if (nullptr == mGlfwWindow)
 	{
-		// ¹®Á¦°¡ ¹ß»ıÇØ¼­ Á¾·áÇÏ°Ô µÇ´Â °æ¿ì.
+		// ë¬¸ì œê°€ ë°œìƒí•´ì„œ ì¢…ë£Œí•˜ê²Œ ë˜ëŠ” ê²½ìš°.
 		glfwTerminate();
 		return;
 	}
 	Initialize();
 
 
-	// ¸ŞÀÎ ·çÇÁ
+	// ë©”ì¸ ë£¨í”„
 	while(!glfwWindowShouldClose(mGlfwWindow)) {
-		// È­¸éÀ» Æ¯Á¤»ö»óÀ¸·Î Ã¤¿ò.
+		// í™”ë©´ì„ íŠ¹ì •ìƒ‰ìƒìœ¼ë¡œ ì±„ì›€.
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		// ÄÃ·¯¹öÆÛ¿Í µª½º	¹ö	ÆÛ¸¦ Áö¿î´Ù.
+		// ì»¬ëŸ¬ë²„í¼ì™€ ëìŠ¤	ë²„	í¼ë¥¼ ì§€ìš´ë‹¤.
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		mDeltaTime = static_cast<float>(glfwGetTime()) - mPrevTime;
@@ -80,18 +95,18 @@ void ExampleBase::Run() {
 
 		mPrevTime = static_cast<float>(glfwGetTime());
 
-		// ¹öÆÛ ½º¿Ò
+		// ë²„í¼ ìŠ¤ì™‘
 		glfwSwapBuffers(mGlfwWindow);
-		// ÀÌº¥Æ® Ã³¸®
+		// ì´ë²¤íŠ¸ ì²˜ë¦¬
 		glfwPollEvents();
 
-		// CPU ½¬´Â ½Ã°£ ÁÖ±â(Á¡À¯À² Á¶Àı)		
+		// CPU ì‰¬ëŠ” ì‹œê°„ ì£¼ê¸°(ì ìœ ìœ¨ ì¡°ì ˆ)		
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
 	}
 
-	// ÀÚ¿ø ÇØÁ¦
+	// ìì› í•´ì œ
 	CleanUp();
-	// GLFW Á¾·á
+	// GLFW ì¢…ë£Œ
 	glfwTerminate();
 }
 

@@ -22,17 +22,17 @@ public:
 	virtual void CleanUp() override;
 
 private:
-	// ¼ÎÀÌ´õ °ü·Ã.
+	// ì…°ì´ë” ê´€ë ¨.
 	void CreateDefaultShader();
 	void CheckShaderCompileErrors(unsigned int shader, std::string type);
 	void DeleteDefaultShader();
 
-	// »ï°¢Çü ·»´õ¸µ °ü·Ã.
+	// ì‚¼ê°í˜• ë Œë”ë§ ê´€ë ¨.
 	void CreateRectangle();
 	void CreateVertexBuffer();
 	void DeleteVertexBuffer();
 
-	// ÅØ½ºÃ³ °ü·Ã.
+	// í…ìŠ¤ì²˜ ê´€ë ¨.
 	unsigned int LoadTexture(const std::string& path);
 
 private:
@@ -49,22 +49,22 @@ private:
 
 	};
 
-	// ÅØ½ºÃ³ ÁÂÇ¥ °è»ê ¹æ½Ä, ·¡ÇÎ ¹æ½Ä, ÇÊÅÍ¸µ ¹æ½ÄÀ» º¸°üÇÒ º¯¼öµé.
+	// í…ìŠ¤ì²˜ ì¢Œí‘œ ê³„ì‚° ë°©ì‹, ë˜í•‘ ë°©ì‹, í•„í„°ë§ ë°©ì‹ì„ ë³´ê´€í•  ë³€ìˆ˜ë“¤.
 	UvType mUvType{};
 	int mWrapType{};
 	int mFilterType{};
 
-	// »ï°¢ÇüÀÇ ¹öÅØ½º¿Í ÀÎµ¦½º¸¦ º¸°üÇÒ ¸Ş¸ğ¸® ¹è¿­.
+	// ì‚¼ê°í˜•ì˜ ë²„í…ìŠ¤ì™€ ì¸ë±ìŠ¤ë¥¼ ë³´ê´€í•  ë©”ëª¨ë¦¬ ë°°ì—´.
 	std::vector<VertexUV> mVertices{};
 	std::vector<unsigned int> mIndices{};
 
-	// OpenGL¿¡¼­ »ı¼ºÇÑ ¹öÆÛ ID¸¦ º¸°üÇÒ º¯¼öµé.
+	// OpenGLì—ì„œ ìƒì„±í•œ ë²„í¼ IDë¥¼ ë³´ê´€í•  ë³€ìˆ˜ë“¤.
 	unsigned int mVertexArrayObjectId{};
 	unsigned int mVertexBufferObjectId{};
 	unsigned int mElementBufferObjectId{};
 	unsigned int mTextureId0{};
 	unsigned int mTextureId1{};
-	// OpenGL¿¡¼­ »ç¿ëÇÏ´Â ¼ÎÀÌ´õ ID¸¦ º¸°üÇÒ º¯¼ö.
+	// OpenGLì—ì„œ ì‚¬ìš©í•˜ëŠ” ì…°ì´ë” IDë¥¼ ë³´ê´€í•  ë³€ìˆ˜.
 	unsigned int mDefaultShaderID{};
 };
 

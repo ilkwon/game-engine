@@ -4,7 +4,7 @@
 
 #include "glm/glm.hpp"
 
-#include "common\WindowParam.h"
+#include "common/WindowParam.h"
 
 struct GLFWwindow;
 
@@ -14,7 +14,7 @@ public:
 	virtual ~ExampleBase();
 	void Run();
 
-	// ¿¹Á¦°¡ ±¸ÇöÇØ¾ß ÇÏ´Â °¡»ó ÇÔ¼öµé
+	// ì˜ˆì œê°€ êµ¬í˜„í•´ì•¼ í•˜ëŠ” ê°€ìƒ í•¨ìˆ˜ë“¤
 	virtual void Initialize();
 	virtual void Render();
 	virtual void CleanUp();
@@ -28,7 +28,7 @@ public:
 protected:
 	GLFWwindow* CreateWindow(int width, int height, const std::string title);
 
-	// À©µµ¿ì ÀÌº¥Æ®¸¦ ¹ŞÀ» Äİ¹é ÇÔ¼öµé.
+	// ìœˆë„ìš° ì´ë²¤íŠ¸ë¥¼ ë°›ì„ ì½œë°± í•¨ìˆ˜ë“¤.
 	static void OnGlfwSetFramebufferSizeCallback(GLFWwindow* window, int width, int height);
 	static void OnGlfwSetCursorPosCallback(GLFWwindow* window, double xpos, double ypos);
 	static void OnGlfwSetMouseButtonCallback(GLFWwindow* window, int button, int action, int mods);

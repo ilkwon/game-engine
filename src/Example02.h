@@ -13,27 +13,27 @@ public:
 	virtual void CleanUp() override;
 
 private:
-	// ¼ÎÀÌ´õ °ü·Ã.
+	// ì…°ì´ë” ê´€ë ¨.
 	void CreateDefaultShader();
 	void CheckShaderCompileErrors(unsigned int shader, std::string type);
 	void DeleteDefaultShader();
 
-	// »ï°¢Çü ·»´õ¸µ °ü·Ã.
+	// ì‚¼ê°í˜• ë Œë”ë§ ê´€ë ¨.
 	void CreateTriangle();
 	void CreateVertexBuffer();
 	void DeleteVertexBuffer();
 
 private:
-	// »ï°¢ÇüÀÇ ¹öÅØ½º¿Í ÀÎµ¦½º¸¦ º¸°üÇÒ ¸Ş¸ğ¸® ¹è¿­.
+	// ì‚¼ê°í˜•ì˜ ë²„í…ìŠ¤ì™€ ì¸ë±ìŠ¤ë¥¼ ë³´ê´€í•  ë©”ëª¨ë¦¬ ë°°ì—´.
 	std::vector<glm::vec3> mVertices{};
 	std::vector<unsigned int> mIndices{};
 
-	// OpenGL¿¡¼­ »ı¼ºÇÑ ¹öÆÛ ID¸¦ º¸°üÇÒ º¯¼öµé.
+	// OpenGLì—ì„œ ìƒì„±í•œ ë²„í¼ IDë¥¼ ë³´ê´€í•  ë³€ìˆ˜ë“¤.
 	unsigned int mVertexArrayObjectId{};
 	unsigned int mVertexBufferObjectId{};
 	unsigned int mElementBufferObjectId{};
 
-	// OpenGL¿¡¼­ »ç¿ëÇÏ´Â ¼ÎÀÌ´õ ID¸¦ º¸°üÇÒ º¯¼ö.
+	// OpenGLì—ì„œ ì‚¬ìš©í•˜ëŠ” ì…°ì´ë” IDë¥¼ ë³´ê´€í•  ë³€ìˆ˜.
 	unsigned int mDefaultShaderID{};
 };
 

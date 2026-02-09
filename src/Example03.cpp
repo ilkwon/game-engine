@@ -19,7 +19,7 @@ Example03::~Example03()
 //-----------------------------------------------------------------------------
 void Example03::CreateDefaultShader()
 {
-	// Vertex Shader ¼Ò½º ÄÚµå
+	// Vertex Shader ì†ŒìŠ¤ ì½”ë“œ
 	std::string vertexCode = R"(
 		#version 460 core
 		layout (location = 0) in vec3 aPos;
@@ -31,7 +31,7 @@ void Example03::CreateDefaultShader()
 			vertexColor = aColor;
 		}
 		)";
-	// Fragment Shader ¼Ò½º ÄÚµå
+	// Fragment Shader ì†ŒìŠ¤ ì½”ë“œ
 	std::string fragmentCode = R"(
 		#version 460 core
 		in vec3 vertexColor;
@@ -48,30 +48,30 @@ void Example03::CreateDefaultShader()
 	unsigned int vertex{};
 	unsigned int fragment{};
 
-	// ¹öÅØ½º ¼ÎÀÌ´õ ÄÄÆÄÀÏÀ» ¼öÇàÇÑ´Ù.
+	// ë²„í…ìŠ¤ ì…°ì´ë” ì»´íŒŒì¼ì„ ìˆ˜í–‰í•œë‹¤.
 	vertex = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertex, 1, &VERTEX_SHADER_CODE, NULL);
 	glCompileShader(vertex);
-	// ÄÄÆÄÀÏ ¿¡·¯°¡ ¹ß»ıÇß´ÂÁö Ã¼Å© ÇÑ´Ù.
+	// ì»´íŒŒì¼ ì—ëŸ¬ê°€ ë°œìƒí–ˆëŠ”ì§€ ì²´í¬ í•œë‹¤.
 	CheckShaderCompileErrors(vertex, "VERTEX");
 
-	// ÇÁ·¡±×¸ÕÆ® ¼ÎÀÌ´õ ÄÄÆÄÀÏÀ» ¼öÇàÇÑ´Ù.
+	// í”„ë˜ê·¸ë¨¼íŠ¸ ì…°ì´ë” ì»´íŒŒì¼ì„ ìˆ˜í–‰í•œë‹¤.
 	fragment = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment, 1, &FRAGMENT_SHADER_CODE, NULL);
 	glCompileShader(fragment);
-	// ÄÄÆÄÀÏ ¿¡·¯°¡ ¹ß»ıÇß´ÂÁö Ã¼Å© ÇÑ´Ù.
+	// ì»´íŒŒì¼ ì—ëŸ¬ê°€ ë°œìƒí–ˆëŠ”ì§€ ì²´í¬ í•œë‹¤.
 	CheckShaderCompileErrors(fragment, "FRAGMENT");
 
-	// OpenGL¿¡ ¼ÎÀÌ´õ ÇÁ·Î±×·¥À» µî·ÏÇÑ´Ù.
+	// OpenGLì— ì…°ì´ë” í”„ë¡œê·¸ë¨ì„ ë“±ë¡í•œë‹¤.
 	mDefaultShaderID = glCreateProgram();
 	glAttachShader(mDefaultShaderID, vertex);
 	glAttachShader(mDefaultShaderID, fragment);
 
 	glLinkProgram(mDefaultShaderID);
-	// ÄÄÆÄÀÏ ¿¡·¯°¡ ¹ß»ıÇß´ÂÁö Ã¼Å© ÇÑ´Ù.
+	// ì»´íŒŒì¼ ì—ëŸ¬ê°€ ë°œìƒí–ˆëŠ”ì§€ ì²´í¬ í•œë‹¤.
 	CheckShaderCompileErrors(mDefaultShaderID, "PROGRAM");
 
-	// ÄÄÆÄÀÏ°ú ÇÁ·Î±×·¥ µî·ÏÀÌ ¸ğµÎ ¿Ï·áµÇ¾úÀ¸¸é ´õÀÌ»ó °®°í ÀÖÀ» ÇÊ¿ä°¡ ¾øÀ¸¹Ç·Î ÀÚ¿øÀ» ÇØÁ¦ ÇÑ´Ù.
+	// ì»´íŒŒì¼ê³¼ í”„ë¡œê·¸ë¨ ë“±ë¡ì´ ëª¨ë‘ ì™„ë£Œë˜ì—ˆìœ¼ë©´ ë”ì´ìƒ ê°–ê³  ìˆì„ í•„ìš”ê°€ ì—†ìœ¼ë¯€ë¡œ ìì›ì„ í•´ì œ í•œë‹¤.
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 }
@@ -123,7 +123,7 @@ void Example03::CreateTriangle()
 //-----------------------------------------------------------------------------
 void Example03::CreateVertexBuffer() 
 {
-	// ¹öÅØ½º ¹öÆÛ¿Í ÀÎµ¦½º ¹öÆÛ¸¦ º¸°üÇÒ "vertex array" ¿ÀºêÁ§Æ®¸¦ »ı¼ºÇÑ´Ù.
+	// ë²„í…ìŠ¤ ë²„í¼ì™€ ì¸ë±ìŠ¤ ë²„í¼ë¥¼ ë³´ê´€í•  "vertex array" ì˜¤ë¸Œì íŠ¸ë¥¼ ìƒì„±í•œë‹¤.
 	glGenVertexArrays(1, &mVertexArrayObjectId);
 	// Create vertex buffer.
 	glGenBuffers(1, &mVertexBufferObjectId);
@@ -133,19 +133,19 @@ void Example03::CreateVertexBuffer()
 	// Bind VAO.
 	glBindVertexArray(mVertexArrayObjectId);
 	{
-		// ¹öÅØ½º µ¥ÀÌÅÍ¸¦ ¹öÅØ½º ¹öÆÛ¿¡ ¿Ã¸°´Ù.
+		// ë²„í…ìŠ¤ ë°ì´í„°ë¥¼ ë²„í…ìŠ¤ ë²„í¼ì— ì˜¬ë¦°ë‹¤.
 		glBindBuffer(GL_ARRAY_BUFFER, mVertexBufferObjectId);
 		{
 			glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(Vertex), &mVertices[0], GL_STATIC_DRAW);
 		}
 
-		// ÀÎµ¦½º µ¥ÀÌÅÍ¸¦ ÀÎµ¦½º ¹öÆÛ(element array buffer)¿¡ ¿Ã¸°´Ù.
+		// ì¸ë±ìŠ¤ ë°ì´í„°ë¥¼ ì¸ë±ìŠ¤ ë²„í¼(element array buffer)ì— ì˜¬ë¦°ë‹¤.
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mElementBufferObjectId);
 		{
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(unsigned int), &mIndices[0], GL_STATIC_DRAW);
 		}
 
-		// ¹öÅØ½º ¼Ó¼º(attribute)À» ¼³Á¤ÇÑ´Ù.
+		// ë²„í…ìŠ¤ ì†ì„±(attribute)ì„ ì„¤ì •í•œë‹¤.
 		glEnableVertexAttribArray(0);
 		{
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, mPosition));
@@ -172,12 +172,12 @@ void Example03::Initialize()
 //-----------------------------------------------------------------------------
 void Example03::Render()
 {
-	// ·»´õ¸µÇÒ ¶§ »ç¿ëÇÒ ¼ÎÀÌ´õ ÇÁ·Î±×·¥À» È°¼ºÈ­ ÇÑ´Ù.
+	// ë Œë”ë§í•  ë•Œ ì‚¬ìš©í•  ì…°ì´ë” í”„ë¡œê·¸ë¨ì„ í™œì„±í™” í•œë‹¤.
 	glUseProgram(mDefaultShaderID);
-	// VAO ¹ÙÀÎµù.
+	// VAO ë°”ì¸ë”©.
 	glBindVertexArray(mVertexArrayObjectId);
 	{
-		// »ï°¢Çü ·»´õ¸µ.
+		// ì‚¼ê°í˜• ë Œë”ë§.
 		glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mIndices.size()), GL_UNSIGNED_INT, 0);
 	}
 	glBindVertexArray(0);
